@@ -1,17 +1,27 @@
-function combinationSum(candidates, target) {
-  const result = [];
-  backtrack(0, [], 0);
-  return result;
-  function backtrack(start, current, sum) {
-    if (sum === target) {
-      result.push([...current]);
-      return;
-    }
-    if (sum > target || start === candidates.length) return;
-    for (let i = start; i < candidates.length; i++) {
-      current.push(candidates[i]);
-      backtrack(i, current, sum + candidates[i]);
-      current.pop();
-    }
-  }
+function Trie() {
+  this.root = {};
 }
+Trie.prototype.insert = function (word) {
+  let node = this.root;
+  for (const char of word) {
+    if (!node[char]) node[char] = {};
+    node = node[char];
+  }
+  node.isEnd = true;
+};
+Trie.prototype.search = function (word) {
+  let node = this.root;
+  for (const char of word) {
+    if (!node[char]) return false;
+    node = node[char];
+  }
+  return node.isEnd === true;
+};
+Trie.prototype.startsWith = function (prefix) {
+  let node = this.root;
+  for (const char of prefix) {
+    if (!node[char]) return false;
+    node = node[char];
+  }
+  return true;
+};
